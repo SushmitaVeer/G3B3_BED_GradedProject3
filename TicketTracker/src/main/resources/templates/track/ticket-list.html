@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Ticket Tracker</title>
+
+</head>
+
+<body>
+	<div class="container mt-5 pt-2 ">
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Ticket Tracker Application</a>
+			</div>
+			<ul class="navbar-nav">
+				<li class="nav-item mr-sm-2"><a class="btn btn-info" href="/tickets/list ">Tickets</a>
+				</li>
+				<li class="nav-item mr-sm-2"><a class="btn btn-info" href="/tickets/addNewTickets">New Ticket</a></li>
+			</ul>
+			</form>
+		</nav>
+	</div>
+	<div class="container mt-5 pt-2 border">
+
+		<h3 style="text-align: left; color: black">List Of Tickets</h3>
+		<form class="form-inline" th:action="@{/tickets/list}" method="get">
+			<input class="form-control mr-sm-3" type="text" placeholder="Search" name="keyword" id="txtsearch">
+			<button class="btn btn-primary mr-sm-5" type="submit">Search</button>
+
+		</form>
+		<hr>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>S.No</th>
+					<th>Ticket Title</th>
+					<th>Ticket Short Description</th>
+					<th>Ticket Created On</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tr th:each="ticket, rCount: ${tickets}">
+
+				<td th:text="${rCount.count}"></td>
+				<td th:text="${ticket.title}"></td>
+				<td th:text="${ticket.description}"></td>
+				<td th:text="${ticket.date}"></td>
+				<td>
+					<a th:href="@{/tickets/formForEdit/{id}(id=${ticket.id})}" class="btn btn-primary"
+						role="button">Edit</a>
+					<a th:href="@{/tickets/deleteTicket/{id}(id=${ticket.id})}"
+						onclick="if (!(confirm('Are you sure you want to delete this ticket?'))) return false"
+						class="btn btn-danger" role="button">Delete</a>
+					<a th:href="@{/tickets/viewTicket/{id}(id=${ticket.id})}" class="btn btn-info"
+						role="button">View</a>
+			</tr>
+
+		</table>
+	</div>
+
+</body>
+
+</html>
